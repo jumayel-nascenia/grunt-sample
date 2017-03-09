@@ -1,13 +1,28 @@
 module.exports = function(grunt) {
-    grunt.registerTask('task1', function () {
-        console.log('This is task 1.');
+    // Project configuration.
+    grunt.initConfig({
+        concat: {
+            js: {
+                src: ['js/1.js', 'js/2.js'],
+                dest: 'build/js/scripts.js',
+            },
+            css: {
+                src: ['css/main.css', 'css/theme.css'],
+                dest: 'build/css/styles.css',
+            },
+        },
+        watch: {
+            js: {
+                files: ['js/**/*.js'],
+                tasks: ['concat:js'],
+            },
+            css: {
+                files: ['css/**/*.css'],
+                tasks: ['concat:css'],
+            },
+        },
     });
-
-    grunt.registerTask('task2', function () {
-        console.log('This is task 2.');
-    });
-
-    grunt.registerTask('both', ['task1', 'task2']); // -> grunt both
-
-    grunt.registerTask('default', ['task1', 'task2']); // -> grunt
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.registerTask('default', ['concat', 'watch']);
 };
